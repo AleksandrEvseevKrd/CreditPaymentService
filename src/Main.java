@@ -1,28 +1,27 @@
 public class Main {
     public static void main(String[] args) {
-        int s = 1_000_000; //сумма кредита
-        double p = 9.99; //процентная ставка в год
-        int e = 1; //срок кредит в годах
-        int n = 12 * e; //срок кредита в месяцах
-        double m = p / 12 / 100; //процентная ставка в месяц
-        //аннуитентный платеж (A) = коэффициент аннуитета (K) * сумму займа (S)
-        //коэффициент аннуитета (К) = m * (1+m)^n / ((1+m)^n - 1)
-        double i = 1 + m; // не знаю как это обозначить, наверное возможно иначе это сделать?
-        double k = m * Math.pow(i, n) / (Math.pow(i, n) - 1);
-        double a = k * s;
-        int r = (int) Math.round(a); // пока изучал Math.pow, Math.round на глаза попался, решил использовать.
+        CreditPaymentService service = new CreditPaymentService();
 
-        System.out.println("Сумма кредита: " + s);
-        System.out.println("Срок кредита (лет): " + e);
-        System.out.println("Процентная ставка: " + p + " % годовых");
-        System.out.println("Ежемесячный платеж: " + r);
+        int loanAmount = 1_000_000;
+        double interestRate = 9.99;
+        int loanTerm = 12;
+        int payment = service.calculate(loanAmount, (double) interestRate, loanTerm);
 
-        /* не знаю верно я всё это сделал или нет, но мне кажется, что да и я собой горжусь =).
-        Уверен, что эту задачу можно выполнить другими действиями, куда более простыми,
-        но я порылся в интернете и пришёл к такому решению. Java доставляет удовольствие.
-        Ничего не понято(это пока), но очень интересно!
-         */
+        System.out.println("Сумма кредита: " + loanAmount + "руб.");
+        System.out.println("Процентная ставка: " + interestRate + "%");
+        System.out.println("Срок кредита: 12 мес.");
+        System.out.println("Ежемесячный платеж: " + payment + "руб.");
 
+        System.out.println();
+        System.out.println("Сумма кредита: " + loanAmount + "руб.");
+        System.out.println("Процентная ставка: " + interestRate + "%");
+        System.out.println("Срок кредита: 24 мес.");
+        System.out.println("Ежемесячный платеж: " + service.calculate(loanAmount = 1_000_000, interestRate = 9.99, loanTerm = 24) + "руб.");
 
+        System.out.println();
+        System.out.println("Сумма кредита: " + loanAmount + "руб.");
+        System.out.println("Процентная ставка: " + interestRate + "%");
+        System.out.println("Срок кредита: 36 мес.");
+        System.out.println("Ежемесячный платеж: " + service.calculate(loanAmount = 1_000_000, interestRate = 9.99, loanTerm = 36) + "руб.");
     }
 }
